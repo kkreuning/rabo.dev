@@ -19,7 +19,7 @@ process these events, and act on them, e.g. by creating shipments, sending e-mai
 
 If you are new to Rabo Smart Pay webhooks, start by understanding the [webhook lifecycle](./webhook-lifecycle.md).
 
-When you are ready to integrate webhooks into your platform, see [getting started](./getting-started.md).
+When you are ready to integrate webhooks into your platform, see [getting started](./getting-started/prerequisites.md).
 
 In case you want to know how to manage your webhooks, see
 [webhook subscriptions](./advanced-topics/migrating-to-v3-webhooks.md).
