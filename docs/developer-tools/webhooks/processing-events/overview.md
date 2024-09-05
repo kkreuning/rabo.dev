@@ -2,7 +2,7 @@
 sidebar_position: 0
 ---
 
-# Processing events
+# Overview
 :::danger always verify the signature
 
 Before processing events, your server __[must always verify the signature](../verifying-signatures.md)__ on the event!
@@ -42,7 +42,7 @@ When Rabo Smart Pay delivers events to your server, it always includes a `x-smar
 server must use this event type to determine if it should process the event contained in the request body.
 
 In case your server doesn't know what to do with the event, your server should just acknowledge the event to Rabo Smart
-Pay as to avoid getting the delivery [retried](../acknowledging-events-and-retries/index.md). You should investigate why
+Pay as to avoid getting the delivery [retried](../acknowledging-events-and-retries/overview.md). You should investigate why
 this event was delivered to you by checking your [webhook subscriptions](../webhook-subscriptions.md).
 
 :::info process events idempotently
@@ -55,6 +55,6 @@ confirmation e-mails to your customers, or shipping two air-fryers instread of o
 
 Your server should use the events `id`, present in all events, to track if it already processed that event or not. The
 event identifier will always remain the same for that given event, even in case of
-[retries](../acknowledging-events-and-retries/index.md).
+[retries](../acknowledging-events-and-retries/overview.md).
 
 :::

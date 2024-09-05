@@ -1,0 +1,68 @@
+# Notes
+
+## Overal structure
+
+- get started
+    - onboarding with Rabo Smart Pay
+    - choosing an integration
+        - pre-built integrations
+        - hosted checkout
+        - embedded checkout
+        - finding an integration partner
+    - go-live checklist
+- accepting payments
+    - orders
+        - lifecycle
+        - refunds
+    - payment methods
+        - cards
+        - ideal
+        - bancontact
+        - paypal
+- developers tools
+    - authentication
+    - pre-built integrations
+        - magento
+        - woocommerce
+        - etc.
+    - fast checkout
+        - ideal snel bestellen
+        - click to pay
+    - SDK
+        - smartpay.js
+        - java
+        - php
+    - API
+        - rate limits
+        - api idempotency
+        - OAS specifications
+    - webhooks ✅
+        - introduction
+        - webhook lifecycle
+        - getting started
+            - prerequisites
+            - implementation guide
+        - webhook subscriptions
+        - verifying signatures
+        - processing events
+            - overview
+            - available events
+            - event versioning
+            - update event versions
+        - acknowledging events and retries
+            - overview
+            - retry delays
+        - advanced topic
+            - migrating from legacy to v3 webhooks
+            - outgoing ip addresses
+            - legacy webhooks
+    - testing
+        - test card numbers
+        - magic amounts
+        - sandbox environment
+        - signature debugger
+    - cookbook
+    - compatibility matrix
+    - for integration partners
+- no-code
+    - betaalverzoek+
