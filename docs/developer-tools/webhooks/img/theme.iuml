@@ -1,0 +1,62 @@
+!theme carbon-gray
+
+skinparam backgroundColor White
+skinparam wrapWidth 180
+skinparam maxMessageSize 300
+
+' !define _orderAmount €  //orderAmount// 
+' !define _reference 🆔//paymentID//
+' !define _paymentToken 🎟️//paymentToken//
+' !define _shippingCost €  //shippingCost//?
+' !define _returnURL 🔙//returnURL//
+' !define _redirectURL 🔗//redirectURL//
+' !define _callbackURL 📣//callbackURL//
+' !define _signature ℬ  //signature//
+' !define _requestedCustomerDetails ℹ️//requestedCustomerDetails[]//
+' !define _status 🚦//status//
+' !define _metadata ✽  //metadata//
+' !define _methods 🔌//paymentMethods[]//
+' !define _useCardsOnFile 🚩//useCardsOnFile//
+' !define _cardReference 💳//cardReference//
+' !define _shopperId 👤//shopperID//
+' !define _qrCode 📱//qrCode//
+' !define _pollURL ⏬//pollURL//
+' !define _paymentDeadline ☠️//paymentDeadline//
+' !define _useFastCheckout 🏁//allowFastCheckout//
+' !define _merchantAccessToken 🎫//merchantAccessToken//
+
+!unquoted procedure $start_autonumber($n=1, $step=1)
+    autonumber $n $step "__0__"
+!endprocedure
+
+!unquoted procedure $customer_arrives($to, $description="")
+    $redirect_customer('[', $to, $description)
+!endprocedure
+
+!unquoted procedure $redirect_customer($from, $to, $description = "")
+    $from-[#HotPink]>$to : $description
+!endprocedure
+
+!unquoted procedure $return_customer($from, $to, $description = "")
+    $from-[#HotPink]->$to : $description
+!endprocedure
+
+!unquoted procedure $customer_action_note($target, $text)
+    note over $target #LightPink : $text
+!endprocedure
+
+!unquoted procedure $http_request($method, $path, $description="")
+  !if $description != ""
+    **$method** $path\n$description
+  !else
+    **$method** $path
+  !endif
+!endprocedure
+
+!unquoted procedure $http_response($status, $description="")
+  !if $description != ""
+    **$status**\n$description
+  !else
+    **$status**
+  !endif
+!endprocedure
