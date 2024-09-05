@@ -1,12 +1,16 @@
 ---
-sidebar_position: 20
+sidebar_position: 50
 ---
 
-# Retry delays
+# Retrying failed deliveries
 
 When an event delivery fails in a retryable manner, Rabo Smart Pay will retry the delivery at a later time.
 
 The retry mechanism uses an exponential backoff to calculate the delay as to not overload your server, or network.
+
+Rabo Smart Pay will retry failed deliveries up to at least 20 times, after that it will start feeling sad for the event, stop retrying, and maybe disable your webhook subscription for you.
+
+## Delays between attempts
 
 | retry attempt | delay until next attempt  |
 |--------------:|---------------------------|
@@ -30,6 +34,3 @@ The retry mechanism uses an exponential backoff to calculate the delay as to not
 | 18            | ~3 days                   |
 | 19            | ~6 days                   |
 | 20            | ~12 days                  |
-
-After that Rabo Smart Pay starts feeling sad for the event, stop retrying, and maybe disable your webhook subscription
-for you.

@@ -7,10 +7,10 @@ sidebar_position: 30
 Whenever an event occurs that you have a subscription on, Rabo Smart Pay will deliver that event to your server.
 
 Your server then must:
-1. [Accept the event](./getting-started/implementation-guide.md).
-2. [Verify the event's signature](./verifying-signatures.md).
-3. [Process the event](./processing-events/overview.md).
-4. And finally [Acknowledge the event](./acknowledging-events-and-retries/overview.md).
+1. [Accept the event](./implementation-guide.md).
+2. [Verify the event's signature](./accepting-events/verifying-signatures.md).
+3. [Process the event](./accepting-events/overview.md).
+4. And finally [Acknowledge the event](./accepting-events/acknowledging-events.md).
 
 ![webhook sequence diagram](./img/webhook_sequence_diagram.svg)
 

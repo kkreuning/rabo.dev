@@ -3,7 +3,7 @@ sidebar_position: 20
 ---
 
 # Migrating from legacy to v3 webhooks
-### 1. Setup your server to [accept webhooks](../getting-started/implementation-guide.md).
+### 1. Setup your server to [accept webhooks](../implementation-guide.md).
 ```
 ┌───────────────────────────────────────────────────┐
 │                  Rabo Smart Pay                   │░
@@ -19,7 +19,7 @@ sidebar_position: 20
 └────────────────────────────────────────────────────┘
 ```
 
-### 2. Create a [webhook subscription](../webhook-subscriptions.md).
+### 2. Create a [webhook subscription](../managing-subscriptions.md).
 ```
 ┌───────────────────────────────────────────────────┐
 │                  Rabo Smart Pay                   │░

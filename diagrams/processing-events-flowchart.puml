@@ -1,0 +1,31 @@
+@startuml
+!include theme.iuml
+
+!pragma useVerticalIf on
+start
+:receive event;
+
+if (event identifier known) then (yes)
+    #LightGreen:ignore, and acknowledge
+    to avoid retries;
+    detach
+else (no)
+    if (signature verified) then (no)
+        #Pink:return error;
+        detach
+    else (yes)
+        if (event supported) then (no)
+            #LightGreen:acknowledge to
+            avoid retries;
+            detach
+        else (yes)
+            :apply your
+            business logic;
+            :store event identifier;
+            #LightGreen:acknowledge;
+            detach
+        endif
+    endif
+endif
+
+@enduml

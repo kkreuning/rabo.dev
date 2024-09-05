@@ -1,8 +1,28 @@
 ---
-sidebar_position: 40
+sidebar_position: 140
 ---
 
 # Implementation guide
+
+## Prerequisites
+
+In order to accept events, the your server needs to expose an HTTP endpoints with the following requirements:
+- it must be accessible over the public internet.
+- it must accept HTTP POST requests.
+- it must be secured using TLSv1.2, or TLSv1.3 supporting at least one of the following cipher suites:
+    - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+    - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+    - TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384
+    - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+
+:::warning Secure communications
+
+Because of the possible sensitive nature of webhooks, Rabo Smart Pay will only deliver events if a secure connection
+with your server can be established.
+
+:::
+
+## Steps
 
 ### 1. Implement the destination endpoint
 TODO(point to the OpenAPI specification)

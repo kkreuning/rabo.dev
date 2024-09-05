@@ -1,8 +1,8 @@
 ---
-sidebar_position: 0
+sidebar_position: 40
 ---
 
-# Overview
+# Acknowledging events
 Rabo Smart Pay expects your server to answer a delivery with a `200 OK` HTTP response status code, and just the string
 `ack` as response body.
 
