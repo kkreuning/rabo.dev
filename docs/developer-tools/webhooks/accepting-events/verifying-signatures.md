@@ -6,7 +6,7 @@ sidebar_position: 5
 Rabo Smart Pay signs all deliveries using a cryptographically secure signature, this allows your server to
 mathematically verify that a delivery is, indeed, originating from Rabo Smart Pay.
 
-Rabo Smart Pay [JSON Web Signatures](https://en.wikipedia.org/wiki/JSON_Web_Signature) with a detached payload, the
+Rabo Smart Pay uses [JSON Web Signatures](https://en.wikipedia.org/wiki/JSON_Web_Signature) with a detached payload, the
 public keys for verification are published at
 [https://pay.rabobank.nl/.well-known/jwks.json](https://pay.rabobank.nl/.well-known/jwks.json). When verifying a
 signature you must always use one of the published keys!

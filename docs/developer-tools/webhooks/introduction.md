@@ -3,6 +3,7 @@ sidebar_position: 0
 ---
 
 # Introduction
+
 :::info v3 documentation only
 
 This document describes the Rabo Smart Pay v3 webhooks mechanism.
@@ -21,5 +22,4 @@ If you are new to Rabo Smart Pay webhooks, start by understanding the [webhook l
 
 When you are ready to integrate webhooks into your platform, see the [implementation guide](./implementation-guide.md).
 
-In case you want to know how to manage your webhooks, see
-[webhook subscriptions](./advanced-topics/migrating-to-v3-webhooks.md).
+In case you want to know how to manage your webhooks, see [managing subscriptions](./managing-subscriptions.md).
