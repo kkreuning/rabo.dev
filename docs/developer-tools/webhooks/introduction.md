@@ -13,10 +13,10 @@ If you are still using legacy webhooks, you are urged to
 
 :::
 
-Rabo Smart Pay informs you of important events through its webhook mechanism.
+Whenever an event of interest occurs, Rabo Smart Pay will inform you through its webhook mechanism.
 
-Whenever events of interest occurs, Rabo Smart Pay will make HTTP requests to your server. Your server should then 
-process these events, and act on them, e.g. by creating shipments, sending e-mails to your customers, etc.
+This allows you to react to, for example, completion of orders, and then create a shipment, or send an e-mail to 
+your customer.
 
 If you are new to Rabo Smart Pay webhooks, start by understanding the [webhook lifecycle](./webhook-lifecycle.md).
 

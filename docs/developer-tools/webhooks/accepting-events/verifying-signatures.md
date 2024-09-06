@@ -6,21 +6,23 @@ sidebar_position: 5
 Rabo Smart Pay signs all deliveries using a cryptographically secure signature, this allows your server to
 mathematically verify that a delivery is, indeed, originating from Rabo Smart Pay.
 
-Rabo Smart Pay uses [JSON Web Signatures](https://en.wikipedia.org/wiki/JSON_Web_Signature) with a detached payload, the
-public keys for verification are published at
+Rabo Smart Pay uses [JSON Web Signatures](https://en.wikipedia.org/wiki/JSON_Web_Signature) with a detached payload as
+its, authentication mechanism.
+
+Rabo Smart Pay publishes its public keys at
 [https://pay.rabobank.nl/.well-known/jwks.json](https://pay.rabobank.nl/.well-known/jwks.json). When verifying a
 signature you must always use one of the published keys!
 
 ## Verifying signatures using the SDK
 :::info covered by the SDK
 
-When using the `smartPay.processWebhook` or equivalent method of the SDK, signature validation is this is taken care of
+When using the `smartPay.processWebhook` or equivalent method of the SDK, signature validation is taken care of
 automatically.
 
 :::
 
-To manually verify the signature of an event, you need to provide the "raw" body as an array byte, together with the
-signature from the HTTP header.
+To manually verify the signature of an event, you need to provide the "raw" bytes of the HTTP request's body, together
+with the signature from the HTTP header `x-smartpay-signature`.
 
 ```java
 SmartPay smartPay = new SmartPay(REFRESH_TOKEN);
@@ -31,10 +33,10 @@ boolean isValid = smartPay.verifySignature(
 );
 ```
 
-## Manually verifying signatures
+## Verifying signatures without the SDK
 :::warning don't try this at home
 
-The [Rabo Smart Pay SDK](#) provides tooling to verify deliveries. You should use the SDK whenever possible.
+The [Rabo Smart Pay SDK](#) provides tooling to verify signatures. You should use the SDK whenever possible.
 
 :::
 

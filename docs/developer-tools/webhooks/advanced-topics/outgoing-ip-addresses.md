@@ -6,7 +6,7 @@ sidebar_position: 50
 
 :::warning don't try this at home
 
-Your server should rely on the cryptographic signature on the event to determine its authenticity.
+Your server should solely rely on an event's cryptographic signature to determine the event's authenticity.
 
 The list of Rabo Smart Pay outgoing IP addresses may change at any time without a heads up.
 

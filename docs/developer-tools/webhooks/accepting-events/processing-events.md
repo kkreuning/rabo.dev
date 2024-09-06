@@ -2,20 +2,11 @@
 sidebar_position: 0
 ---
 
-# Overview
+# Processing events
 
 ![processing events flowchart](./img/processing-events-flowchart.svg)
 
-
-Rabo Smart Pay offers multiple events, managed trough your webhook subscriptions.
-
-:::danger always verify the signature
-
-Before processing events, your server __[must always verify the signature](./verifying-signatures.md)__ on the event!
-
-:::
-
-The easiest way to process events is to use the [Rabo Smart Pay SDK](#):
+The easiest way to process events is by using the [Rabo Smart Pay SDK](#):
 
 ```java
 SmartPay smartPay = new SmartPay(REFRESH_TOKEN);
@@ -42,9 +33,16 @@ private String webhook(Request request, Response response) {
 }
 ```
 
-When Rabo Smart Pay delivers events to your server, it always includes a `x-smartpay-event-type` HTTP header. Your
-server must use this event type to determine if it should process the event contained in the request body.
-
+:::info
 In case your server doesn't know what to do with the event, your server should just acknowledge the event to Rabo Smart
-Pay as to avoid getting the delivery [retried](./retrying-failed-deliveries.md). You should investigate why this event
-was delivered to you by checking your [webhook subscriptions](../managing-subscriptions.md).
+Pay as to avoid getting the delivery [retried](./retrying-failed-deliveries.md).
+
+You should investigate why this event was delivered to you by checking your
+[webhook subscriptions](../managing-subscriptions.md).
+:::
+
+:::danger always verify the signature
+
+If you are not using the SDK, your server __[must verify the signature manually](./verifying-signatures.md)__!
+
+:::

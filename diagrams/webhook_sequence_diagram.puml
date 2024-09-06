@@ -3,8 +3,8 @@
 
 $start_autonumber()
 
-"Rabo Smart Pay" -> "Your server" ++ : $http_request(POST, "/destination", " - //x-smartpay-event-type//\n - //x-smartpay-signature-detached-jws-v1//\n - //event//")
-    "Your server" -> "Your server" : Verify //x-smartpay-signature-detached-jws-v1// using Rabo Smart Pay public key.
+"Rabo Smart Pay" -> "Your server" ++ : $http_request(POST, "/destination", " - //x-smartpay-event-type//\n - //x-smartpay-signature-//\n - //event//")
+    "Your server" -> "Your server" : Verify //x-smartpay-signature// using Rabo Smart Pay public key.
     "Your server" -> "Your server" : Ensure that //x-smartpay-event-type// is supported.
     "Your server" -> "Your server" : Process //event//, e.g. start shipping goods to customer.
 return $http_response(200 OK, "ack")

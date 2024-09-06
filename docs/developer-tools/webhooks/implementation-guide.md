@@ -6,7 +6,7 @@ sidebar_position: 140
 
 ## Prerequisites
 
-In order to accept events, the your server needs to expose an HTTP endpoints with the following requirements:
+In order to accept events, your server needs to expose an HTTP endpoint with the following requirements:
 - it must be accessible over the public internet.
 - it must accept HTTP POST requests.
 - it must be secured using TLSv1.2, or TLSv1.3 supporting at least one of the following cipher suites:
@@ -17,7 +17,7 @@ In order to accept events, the your server needs to expose an HTTP endpoints wit
 
 :::warning Secure communications
 
-Because of the possible sensitive nature of webhooks, Rabo Smart Pay will only deliver events if a secure connection
+Because of the possible sensitive content of webhooks, Rabo Smart Pay will only deliver events if a secure connection
 with your server can be established.
 
 :::
