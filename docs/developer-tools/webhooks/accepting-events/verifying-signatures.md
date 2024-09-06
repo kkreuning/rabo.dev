@@ -2,6 +2,9 @@
 sidebar_position: 5
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Verifying signatures
 Rabo Smart Pay signs all deliveries using a cryptographically secure signature, this allows your server to
 mathematically verify that a delivery is, indeed, originating from Rabo Smart Pay.
@@ -24,6 +27,8 @@ automatically.
 To manually verify the signature of an event, you need to provide the "raw" bytes of the HTTP request's body, together
 with the signature from the HTTP header `x-smartpay-signature`.
 
+<Tabs groupId="languague">
+    <TabItem value="java" label="Java">
 ```java
 SmartPay smartPay = new SmartPay(REFRESH_TOKEN);
 
@@ -32,6 +37,18 @@ boolean isValid = smartPay.verifySignature(
   request.bodyAsBytes()
 );
 ```
+  </TabItem>
+  <TabItem value="javsscript" label="Javascript">
+```javascript
+const smartPay = new SmartPay(REFRESH_TOKEN);
+
+const isValid = smartPay.verifySignature(
+  req.headers['x-smartpay-signature'],
+  req.body
+);
+```
+  </TabItem>
+</Tabs>
 
 ## Verifying signatures without the SDK
 :::warning don't try this at home

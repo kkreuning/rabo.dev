@@ -35,7 +35,7 @@ customer's credit in your systems.
     "type": "order.status.finalized/v1",
     "subscription": {
         "id": "wsb_akn89a3no4n2rcas4jssa",
-        "description": "My subscription",
+        "description": "My webhook subscription",
     },
     "data": {
         "orderId": "ae918f42-ed83-4af7-b831-20b46d9d1dfc",
@@ -46,7 +46,7 @@ customer's credit in your systems.
         },
         "metadata": "...merchant-defined-metadata..."
     },
-    "deliveredAt": 1725290562
+"timestamp": 1725290562
 }
 ```
 

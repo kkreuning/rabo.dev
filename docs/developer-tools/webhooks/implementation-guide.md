@@ -2,6 +2,9 @@
 sidebar_position: 140
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Implementation guide
 
 ## Prerequisites
@@ -25,12 +28,70 @@ with your server can be established.
 ## Steps
 
 ### 1. Implement the destination endpoint
-TODO(point to the OpenAPI specification)
+Refer to the [Merchant Webhooks API](/oas/merchant-webhooks-api) specification, and either generate, or implement the
+base endpoint.
 
-### 2. Use the SDK to process events
-TODO(code snippet)
+### 2. Use the SDK to process deliveries
+<Tabs groupId="languague">
+    <TabItem value="java" label="Java">
+```java
+private SmartPay smartPay = new SmartPay(REFRESH_TOKEN);
+
+@GetMapping("/webhook")
+private Response<String> handleWebhook(HttpServletRequest request) {
+    try {
+        var event = smartPay.processWebhook<Event.OrderStatusFinalizedV1>(request);
+        
+        applyBusinessLogic(event);
+        
+        return Response.ok("ack");
+
+    } catch (RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+}
+```
+    </TabItem>
+    <TabItem value="javsscript" label="Javascript">
+```javascript
+const smartPay = new SmartPay(REFRESH_TOKEN);
+
+app.post('/webhook', (req, response) -> {
+    try {
+        const event = smartPay.processWebhook(req);
+
+        applyBusinessLogic(event)
+
+        response.send("ack");
+    } catch (e) {
+        response
+            .status(500);
+            .send(e.toString());
+    }
+});
+```
+    </TabItem>
+</Tabs>
 
 ### 3. Apply your business logic
+<Tabs groupId="language">
+    <TabItem value="java" label="Java">
+```java
+private void applyBusinessLogic(Event.OrderStatusFinalizedV1 event) {
+    var eventId = event.getId();
+    var orderId = event.getData().getOrderId();
+
+    if (alreadyProcessedEventIds.contains(eventId)) {
+        return;
+    }
+
+    shipGoodsToCustomer(orderId);
+
+    alreadyProcessedEventIds.add(eventId);
+}
+```
+    </TabItem>
+</Tabs>
 
 ### 4. Create a webhook subscription
 

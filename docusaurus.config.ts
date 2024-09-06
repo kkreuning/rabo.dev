@@ -62,6 +62,21 @@ const config: Config = {
         },
       } satisfies Preset.Options,
     ],
+    [
+      'redocusaurus',
+      {
+        specs: [
+          {
+            spec: 'oas/merchant-webhooks-api.openapi.yaml',
+            route: '/oas/merchant-webhooks-api'
+          },
+          {
+            spec: 'oas/webhook-subscriptions-management-api.openapi.yaml',
+            route: '/oas/webhook-subscriptions-management-api',
+          },
+        ]
+      }
+    ],
   ],
 
   themeConfig: {

@@ -1,0 +1,246 @@
+openapi: 3.0.3
+info:
+  title: Rabo Smart Pay Webhook Subscriptions Management API
+  version: 0.0.1
+tags:
+  - name: Webhooks
+  - name: Subscriptions
+  - name: Verifications
+servers:
+  - description: local
+    url: https://localhost:9090
+paths:
+  "/v3/webhooks/events":
+    get:
+      tags: [ Webhooks ]
+      operationId: listWebhookEvents
+      summary: List all available webhook events
+      description: List all available webhook events.
+      responses:
+        "200":
+          description: List of all available events.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListWebhookEventsResponse"
+        "401":
+          description: Unauthorized
+
+  "/v3/webhooks/subscriptions":
+    get:
+      tags: [ Subscriptions ]
+      operationId: listWebhookSubscriptions
+      summary: List all webhook subscriptions.
+      description: List all webhook subscriptions.
+      responses:
+        "200":
+          description: List of all webhook subscriptions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListWebhookSubscriptionsResponse"
+        "401":
+          description: Unauthorized
+    post:
+      tags: [ Subscriptions ]
+      operationId: createWebhookSubscription
+      summary: Create a new webhook subscription
+      description: A webhook subscription consist of a `destinationUrl`, and a set of `events`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateWebhookSubscriptionRequest"
+      responses:
+        "201":
+          description: Webhook subscription successfully created. See URL in `Location` header.
+          headers:
+            location:
+              $ref: "#/components/parameters/location"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: |
+            Forbidden. You already have the maximum number of webhook subscriptions, and can't create another one.
+  "/v3/webhooks/subscriptions/{id}":
+    get:
+      tags: [ Subscriptions ]
+      operationId: getWebhookSubscription
+      summary: Get details of an existing webhook subscription
+      description: Get details of an existing webhook subscription.
+      responses:
+        "200":
+          description: Details of the webhook subscription.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetWebhookSubscriptionResponse"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+    patch:
+      tags: [ Subscriptions ]
+      operationId: updateWebhookSubscription
+      summary: Update an existing webhook subscription
+      description: Updating a webhook subscription. Only values specified in the request will be updated.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateWebhookSubscriptionRequest"
+      responses:
+        "201":
+          description: Webhook subscription successfully updated. See URL in `Location` header.
+          headers:
+            location:
+              $ref: "#/components/parameters/location"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+    delete:
+      tags: [ Subscriptions ]
+      operationId: deleteWebhookSubscription
+      summary: Delete an existing webhook subscription
+      description: Delete an existing webhook.
+      responses:
+        "204":
+          description: Webhook subscription successfully deleted.
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+  "/v3/webhooks/subscriptions/{id}/verify":
+    post:
+      tags: [ Verifications ]
+      operationId: verifyWebhookSubscription
+      summary: Verify webhook subscription by sending a test event
+      description: Verify webhook subscription by sending a test event.
+      responses:
+        "200":
+          description: Successfully verified webhook subscription.
+        "403":
+          description: Forbidden. The webhook subscription could not be verified.
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        
+
+components:
+  parameters:
+    location:
+      name: location
+      description: Location of the resource.
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uri
+  schemas:
+    ListWebhookEventsResponse:
+      type: object
+      required:
+        - events
+      properties:
+        events:
+          type: array
+          uniqueItems: true
+          items:
+            type: object
+            required:
+              - id
+              - description
+            properties:
+              type:
+                $ref: "#/components/schemas/WebhookEventType"
+              description:
+                description: Description of the event
+                type: string
+    CreateWebhookSubscriptionRequest:
+      type: object
+      required:
+        - status
+        - destinationUrl
+        - events
+      properties:
+        status:
+          $ref: "#/components/schemas/Status"
+        destinationUrl:
+          $ref: "#/components/schemas/DestinationUrl"
+        events:
+          $ref: "#/components/schemas/Events"
+        description:
+          $ref: "#/components/schemas/Description"
+    GetWebhookSubscriptionResponse:
+      type: object
+      required:
+        - id
+        - status
+        - destinationUrl
+        - events
+      properties:
+        id:
+          description: Unique identifier of the webhook subscriptions.
+          type: string
+        status:
+          $ref: "#/components/schemas/Status"
+        destinationUrl:
+          $ref: "#/components/schemas/DestinationUrl"
+        events:
+          $ref: "#/components/schemas/Events"
+        description:
+          $ref: "#/components/schemas/Description"
+    ListWebhookSubscriptionsResponse:
+      type: object
+      required:
+        - subscriptions
+      properties:
+        subscriptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/GetWebhookSubscriptionResponse"
+    UpdateWebhookSubscriptionRequest:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/Status"
+        destinationUrl:
+          $ref: "#/components/schemas/DestinationUrl"
+        events:
+          $ref: "#/components/schemas/Events"
+
+    Description:
+      description: An optional description of this webhook subscription.
+      type: string
+      minimum: 1
+      maximum: 2048
+    DestinationUrl:
+      description: URL that will receive events subscribed to.
+      type: string
+      format: uri
+    Events:
+      description: Set of events to subscribe to.
+      type: array
+      uniqueItems: true
+      minItems: 1
+      items:
+        $ref: "#/components/schemas/WebhookEventType"
+    Status:
+      description: Status of this endpoint. Can be `enabled`, or `disabled`.
+      type: string
+      enum:
+        - "enabled"
+        - "disabled"
+    WebhookEventType:
+      type: string
+      enum:
+        - "order.finalized/v1"
+        - "card-on-file.created/v1"

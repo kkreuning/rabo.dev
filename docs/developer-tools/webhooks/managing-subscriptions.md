@@ -9,7 +9,8 @@ Rabo Smart Pay delivers events to your server using one or more webhook subscrip
 2. A set of [event types](./accepting-events/types-of-events.md) that will be delivered to the destination.
 3. Optionally a textual description of the webhook.
 
-Webhook subscriptions are managed through the dashboard, or using the [Webhook Subscriptions Management API](#).
+Webhook subscriptions are managed through the dashboard, or using the
+[Webhook Subscriptions Management API](/oas/webhook-subscriptions-management-api).
 
 The default maximum number of total webhook subscriptions is 32.
 
