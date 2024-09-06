@@ -39,19 +39,16 @@
     - webhooks ✅
         - introduction
         - webhook lifecycle
-        - getting started
-            - prerequisites
-            - implementation guide
-        - webhook subscriptions
-        - verifying signatures
-        - processing events
-            - overview
-            - available events
-            - event versioning
-            - update event versions
-        - acknowledging events and retries
-            - overview
-            - retry delays
+        - managing subscriptions
+        - accepting events
+            - processing events
+            - verifying signatures
+            - types of events
+            - event idempotency
+            - acknowledging events
+            - retrying failed deliveries
+            - upgrade event versions
+        - implementation guide
         - advanced topic
             - migrating from legacy to v3 webhooks
             - outgoing ip addresses
