@@ -34,7 +34,7 @@ base endpoint.
 ### 2. Use the SDK to process deliveries
 <Tabs groupId="languague">
     <TabItem value="java" label="Java">
-```java
+        ```java
 private SmartPay smartPay = new SmartPay(REFRESH_TOKEN);
 
 @GetMapping("/webhook")
@@ -50,10 +50,10 @@ private Response<String> handleWebhook(HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 }
-```
+        ```
     </TabItem>
     <TabItem value="javsscript" label="Javascript">
-```javascript
+        ```javascript
 const smartPay = new SmartPay(REFRESH_TOKEN);
 
 app.post('/webhook', (req, response) -> {
@@ -69,7 +69,7 @@ app.post('/webhook', (req, response) -> {
             .send(e.toString());
     }
 });
-```
+        ```
     </TabItem>
 </Tabs>
 

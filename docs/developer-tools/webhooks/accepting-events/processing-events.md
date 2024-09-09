@@ -4,7 +4,7 @@ sidebar_position: 0
 
 # Processing events
 
-![processing events flowchart](./img/processing-events-flowchart.svg)
+![](./img/processing-events-flowchart.svg)
 
 :::info
 In case your server doesn't know what to do with the event, your server should just acknowledge the event to Rabo Smart

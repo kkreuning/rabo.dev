@@ -3,8 +3,8 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'rabo.dev',
+  tagline: 'Rabo Smart Pay: Get smart, get paid',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -83,12 +83,18 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      title: 'rabo.dev',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
       },
       items: [
+        {
+          type: 'docSidebar',
+          sidebarId: 'acceptingPayments',
+          position: 'left',
+          label: 'Accepting Payments'
+        },
         {
           type: 'docSidebar',
           sidebarId: 'developerToolsSidebar',
@@ -137,7 +143,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} rabo.dev`,
     },
     prism: {
       theme: prismThemes.github,

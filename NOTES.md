@@ -1,5 +1,9 @@
 # Notes
 
+## TODO
+
+[ ] - dark images
+
 ## Overal structure
 
 - get started
@@ -11,8 +15,9 @@
         - finding an integration partner
     - go-live checklist
 - accepting payments
+    - payment journey ✅
     - orders
-        - lifecycle
+        - announcing orders
         - refunds
     - payment methods
         - cards
@@ -34,8 +39,8 @@
         - php
     - API
         - rate limits
-        - api idempotency
-        - OAS specifications
+        - api idempotency ✅
+        - OAS specifications ✅
     - webhooks ✅
         - introduction
         - webhook lifecycle
@@ -54,9 +59,9 @@
             - outgoing ip addresses
             - legacy webhooks
     - testing
-        - test card numbers
-        - magic amounts
         - sandbox environment
+        - magic amounts
+        - test card numbers
         - signature debugger
     - cookbook
     - compatibility matrix

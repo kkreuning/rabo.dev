@@ -29,24 +29,36 @@ with the signature from the HTTP header `x-smartpay-signature`.
 
 <Tabs groupId="languague">
     <TabItem value="java" label="Java">
-```java
+      ```java
 SmartPay smartPay = new SmartPay(REFRESH_TOKEN);
+String signature = request.headers(SmartPay.Headers.X_SMARTPAY_SIGNATURE);
+byte[] body = request.bodyAsBytes();
 
-boolean isValid = smartPay.verifySignature(
-  request.headers(SmartPay.Headers.X_SMARTPAY_SIGNATURE),
-  request.bodyAsBytes()
-);
-```
+// highlight-next-line
+boolean isValid = smartPay.verifySignature(signature, body);
+
+if (isValid) {
+  // good to go
+} else {
+  // something went wroing
+}
+      ```
   </TabItem>
   <TabItem value="javsscript" label="Javascript">
-```javascript
+      ```javascript
 const smartPay = new SmartPay(REFRESH_TOKEN);
+const signature = req.headers['x-smartpay-signature'];
+const body = req.body;
 
-const isValid = smartPay.verifySignature(
-  req.headers['x-smartpay-signature'],
-  req.body
-);
-```
+// highlight-next-line
+const isValid = smartPay.verifySignature(signature, body);
+
+if (isValid) {
+  // good to go
+} else {
+  // something went wroing
+}
+      ```
   </TabItem>
 </Tabs>
 

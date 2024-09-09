@@ -12,7 +12,7 @@ Your server then must:
 3. [Process the event](./accepting-events/processing-events.md).
 4. And finally [Acknowledge the event](./accepting-events/acknowledging-events.md).
 
-![webhook sequence diagram](./img/webhook_sequence_diagram.svg)
+![](./img/webhook-sequence-diagram.svg)
 
 :::note use the SDK
 

@@ -1,0 +1,34 @@
+@startuml
+!include theme.iuml
+
+participant "e-commerce platform" as webshop
+participant "Rabo Smart Pay" as rasp
+participant "Hosted Checkout" as checkout
+
+' $start_autonumber()
+
+$customer_arrives(webshop, "Customer is ready to pay.")
+
+webshop -> rasp ++ : __1__ $http_request(POST, "/gatekeeper/refresh")
+rasp --> webshop : - accessToken
+deactivate rasp
+
+webshop -> rasp ++ : __2__ $http_request(POST, "/v3/orders")
+return - orderId\n- redirectUrl
+
+$redirect_customer(webshop, checkout, "__3__ Send customer to redirectUrl.")
+activate checkout
+
+|||
+
+$customer_action_note(checkout, "Customer completes payment.")
+$return_customer(checkout, webshop, "__4__ Customer is redirected back to you.")
+deactivate checkout
+
+|||
+
+rasp -> webshop ++ : $http_request(__5__ POST, "/callback")
+    webshop -> webshop : Verify, and process event, e.g. start shipping goods to customer.
+return $http_response(200 OK, "ack")
+
+@enduml

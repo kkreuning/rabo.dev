@@ -1,0 +1,48 @@
+@startuml
+!include theme.iuml
+skinparam SequenceGroupBorderColor #LimeGreen
+
+participant "e-commerce platform" as webshop
+participant "Rabo Smart Pay" as rasp
+participant "payment processor" as processor
+
+$start_autonumber()
+
+note over webshop : SmartPay.js is loaded on your checkout page.
+
+$customer_arrives(webshop, "Customer is ready to pay.")
+
+webshop -> rasp : **order.announce**
+return - orderId\n- clientSecret
+
+webshop -> webshop : initialize SmartPay.js
+
+group SmartPay.js controlled
+
+    webshop -> rasp ++ : **order.listmethods**
+    rasp -> webshop: - methods
+    deactivate rasp
+
+    webshop -> webshop : render payment methods
+
+    $customer_action_note(webshop, "Customer selects payment method.")
+
+    webshop -> rasp ++ : **order.pay**
+    return - nextAction\n - redirectUrl
+
+    $redirect_customer(webshop, processor, "Send customer to redirectUrl.")
+
+end group
+
+|||
+
+$customer_action_note(processor, "Customer completes payment.")
+$return_customer(processor, webshop, "Customer is redirected back to you.")
+
+|||
+
+rasp -> webshop ++ : $http_request(POST, "/callback")
+    webshop -> webshop : Verify, and process event, e.g. start shipping goods to customer.
+return $http_response(200 OK, "ack")
+
+@enduml
