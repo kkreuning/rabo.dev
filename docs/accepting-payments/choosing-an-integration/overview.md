@@ -1,5 +1,6 @@
 ---
 sidebar_position: 10
+pagination_label: Choosing an integration
 ---
 
 # Overview
