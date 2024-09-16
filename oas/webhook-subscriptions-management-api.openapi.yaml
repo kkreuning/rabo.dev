@@ -13,23 +13,23 @@ paths:
   "/v3/webhooks/events":
     get:
       tags: [ Webhooks ]
-      operationId: listWebhookEvents
-      summary: List all available webhook events
-      description: List all available webhook events.
+      operationId: listEvents
+      summary: List all available webhook event types.
+      description: List all available webhook event types.
       responses:
         "200":
-          description: List of all available events.
+          description: List of all available event types.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListWebhookEventsResponse"
+                $ref: "#/components/schemas/ListEventsResponse"
         "401":
           description: Unauthorized
 
   "/v3/webhooks/subscriptions":
     get:
       tags: [ Subscriptions ]
-      operationId: listWebhookSubscriptions
+      operationId: listSubscriptions
       summary: List all webhook subscriptions.
       description: List all webhook subscriptions.
       responses:
@@ -38,14 +38,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListWebhookSubscriptionsResponse"
+                $ref: "#/components/schemas/ListSubscriptionsResponse"
         "401":
           description: Unauthorized
     post:
       tags: [ Subscriptions ]
-      operationId: createWebhookSubscription
+      operationId: createSubscription
       summary: Create a new webhook subscription
-      description: A webhook subscription consist of a `destinationUrl`, and a set of `events`.
+      description: A webhook subscription consist of a `status`, an `url`, and a set of `eventTypes`.
       parameters:
         - $ref: "#/components/parameters/idempotency-key"
 
@@ -54,7 +54,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateWebhookSubscriptionRequest"
+              $ref: "#/components/schemas/CreateSubscriptionRequest"
       responses:
         "201":
           description: Webhook subscription successfully created. See URL in `Location` header.
@@ -73,7 +73,7 @@ paths:
   "/v3/webhooks/subscriptions/{id}":
     get:
       tags: [ Subscriptions ]
-      operationId: getWebhookSubscription
+      operationId: getSubscription
       summary: Get details of an existing webhook subscription
       description: Get details of an existing webhook subscription.
       responses:
@@ -82,14 +82,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetWebhookSubscriptionResponse"
+                $ref: "#/components/schemas/GetSubscriptionResponse"
         "401":
           description: Unauthorized
         "404":
           description: Not Found
     patch:
       tags: [ Subscriptions ]
-      operationId: updateWebhookSubscription
+      operationId: updateSubscription
       summary: Update an existing webhook subscription
       description: |
         Updating a webhook subscription. Only values specified in the request will be updated.
@@ -103,7 +103,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateWebhookSubscriptionRequest"
+              $ref: "#/components/schemas/UpdateSubscriptionRequest"
       responses:
         "201":
           description: Webhook subscription successfully updated. See URL in `Location` header.
@@ -172,60 +172,90 @@ components:
         type: string
         format: uri
   schemas:
-    ListWebhookEventsResponse:
+
+    EventType:
+      description: Event type.
+      type: string
+      enum:
+        - "test/v1"
+        - "order.finalized/v1"
+
+    Subscription:
+      type: object
+      properties:
+        status:
+          description: |
+            Status of the subscription. Indicates wheter or not Rabo Smart Pay will deliver to this subscription or not.
+            
+            Options are `enabled`, and `disabled`.
+          type: string
+          enum: 
+          - "enabled"
+          - "disabled"
+        url:
+          description: |
+            URL of the subscription. Events for this subscription will be delivered to this URL.
+
+            It is important that your server, at the receiving end of this URL, is set up correctly to accept events.
+          type: string
+          format: uri
+        description:
+          description: |
+            Optional description that you provide to this subscription.
+            
+            Will be used when listing subscriptions.
+          type: string
+          minimum: 1
+          maximum: 2048
+        eventTypes:
+          description: |
+            Set of event types that are delivered using this subscription.
+
+            A subscription is not allowed to have no event types associated with it, at least one must be configured.
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/EventType"
+
+    SubscriptionWithId:
+      type: object
+      required:
+        - status
+        - url
+        - eventTypes
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              description: Unique identifier of the subscription.
+              type: string
+        - $ref: "#/components/schemas/Subscription"
+
+    ListEventsResponse:
       type: object
       required:
         - events
       properties:
         events:
           type: array
-          uniqueItems: true
           items:
             type: object
             required:
-              - id
+              - type
               - description
+              - deprecated
             properties:
               type:
-                $ref: "#/components/schemas/WebhookEventType"
+                $ref: "#/components/schemas/EventType"
               description:
-                description: Description of the event
                 type: string
-    CreateWebhookSubscriptionRequest:
-      type: object
-      required:
-        - status
-        - destinationUrl
-        - events
-      properties:
-        status:
-          $ref: "#/components/schemas/Status"
-        destinationUrl:
-          $ref: "#/components/schemas/DestinationUrl"
-        events:
-          $ref: "#/components/schemas/Events"
-        description:
-          $ref: "#/components/schemas/Description"
-    GetWebhookSubscriptionResponse:
-      type: object
-      required:
-        - id
-        - status
-        - destinationUrl
-        - events
-      properties:
-        id:
-          description: Unique identifier of the webhook subscriptions.
-          type: string
-        status:
-          $ref: "#/components/schemas/Status"
-        destinationUrl:
-          $ref: "#/components/schemas/DestinationUrl"
-        events:
-          $ref: "#/components/schemas/Events"
-        description:
-          $ref: "#/components/schemas/Description"
-    ListWebhookSubscriptionsResponse:
+              deprecated:
+                type: boolean
+                default: false
+
+    ListSubscriptionsResponse:
       type: object
       required:
         - subscriptions
@@ -233,41 +263,23 @@ components:
         subscriptions:
           type: array
           items:
-            $ref: "#/components/schemas/GetWebhookSubscriptionResponse"
-    UpdateWebhookSubscriptionRequest:
-      type: object
-      properties:
-        status:
-          $ref: "#/components/schemas/Status"
-        destinationUrl:
-          $ref: "#/components/schemas/DestinationUrl"
-        events:
-          $ref: "#/components/schemas/Events"
+            $ref: "#/components/schemas/SubscriptionWithId"
 
-    Description:
-      description: An optional description of this webhook subscription.
-      type: string
-      minimum: 1
-      maximum: 2048
-    DestinationUrl:
-      description: URL that will receive events subscribed to.
-      type: string
-      format: uri
-    Events:
-      description: Set of events to subscribe to.
-      type: array
-      uniqueItems: true
-      minItems: 1
-      items:
-        $ref: "#/components/schemas/WebhookEventType"
-    Status:
-      description: Status of this endpoint. Can be `enabled`, or `disabled`.
-      type: string
-      enum:
-        - "enabled"
-        - "disabled"
-    WebhookEventType:
-      type: string
-      enum:
-        - "order.finalized/v1"
-        - "card-on-file.created/v1"
+    CreateSubscriptionRequest:
+      type: object
+      required:
+        - status
+        - url
+        - eventTypes
+      allOf:
+        - $ref: "#/components/schemas/Subscription"
+
+    GetSubscriptionResponse:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/SubscriptionWithId"
+
+    UpdateSubscriptionRequest:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Subscription"
