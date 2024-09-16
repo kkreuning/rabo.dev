@@ -93,3 +93,6 @@ With a suitable library in place, your server must:
 8. Verify the _JWK_ using the _public key_.
 
 This is, at its core, what the SDK does when verifying signatures.
+
+Maybe an example for your language, or framework can be found in the
+[cookbook](../../cookbook/verifying-webhook-signatures-with-the-sdk.md).
