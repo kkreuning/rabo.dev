@@ -1,8 +1,12 @@
 ---
 sidebar_position: 60
+title: managing subscriptions
 ---
 
-# Managing subscriptions
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Managing webhook subscriptions
 
 Rabo Smart Pay delivers events to your server using one or more webhook subscriptions, a subscription consist of:
 1. A destination in the form of an HTTP endpoints controlled by the you.
@@ -15,14 +19,67 @@ Webhook subscriptions are managed through the dashboard, or using the
 The default maximum number of total webhook subscriptions is 32.
 
 ## Basic Usage
-#### Create a new subscription
-TODO(code snippet)
-
 #### Listing all subscriptions
-TODO(code snippet)
+<Tabs groupId="languague">
+    <TabItem value="dashboard" label="Dashboard">
+
+![](./img/list-all-webhook-subscriptions.svg)
+
+    </TabItem>
+    <TabItem value="java" label="Java">
+```java
+SmartPay smartPay = new SmartPay(REFRESH_TOKEN);
+List<WebhookSubscription> subscriptions = smartPay.webhookSubscriptions.list();
+```
+    </TabItem>
+</Tabs>
+
+#### Create a new subscription
+<Tabs groupId="languague">
+    <TabItem value="dashboard" label="Dashboard">
+
+![](./img/create-new-webhook-subscription.svg)
+
+Starting at the webhook subscriptions overview:
+1. Click `New subscription`
+2. Fill in the relevant details.
+3. Click `Create`
+
+</TabItem>
+    <TabItem value="java" label="Java">
+```java
+SmartPay smartPay = new SmartPay(REFRESH_TOKEN);
+smartPay.webhookSubscriptions.create(
+    WebhookSubscription.builder()
+        .description("My Subscription")
+        .url(new URI("https://www.example.com/callback"))
+        .event(Event.OrderStatusFinalizedV1)
+        .build()
+);
+```
+    </TabItem>
+</Tabs>
 
 #### Disable a subscription
-TODO(code snippet)
+<Tabs groupId="languague">
+    <TabItem value="dashboard" label="Dashboard">
+
+![](./img/update-existing-webhook-subscription.svg)
+
+Starting at the webhook subscriptions overview:
+1. Find the subscription to disable.
+2. Click `Edit`.
+3. In the status dropdown, select `disabled`.
+4. Click `Update`.
+
+</TabItem>
+    <TabItem value="java" label="Java">
+```java
+SmartPay smartPay = new SmartPay(REFRESH_TOKEN);
+smartPay.webhookSubscriptions.disable("wsb_akn89a3no4n2rcas4jssa");
+```
+    </TabItem>
+</Tabs>
 
 :::info Outstanding deliveries on changes
 

@@ -1,0 +1,28 @@
+@startsalt
+!theme carbon-gray
+
+{^"**Create new webhook subscription**"
+    description | "                                "
+    url         | "https://www.example.com/callback"
+    status      | ^enabled^
+    events      | [X] order.status.finalized/v1
+    .           | [<color:green><&circle-check> Create</color>]
+}
+
+' {^"**Update webhook subscription**"
+'     description | "my webhook subscription         "
+'     url         | "https://www.example.com/callback"
+'     status      | ^enabled^
+'     events      | [X] order.status.finalized/v1
+'     .           | { [<&circle-x> Cancel] | [<color:green><&circle-check> Update</color>] }
+' }
+
+' {^"**Webhook subscriptions**"
+'     { "my webhook subscription" | <color:green><&wifi>  enabled</color> | . | [<&wrench> Edit] | [<color:red><&trash> Delete</color>] }
+'     { "test subscription      " | <color:grey><&wifi> disabled</color> | . | [<&wrench> Edit] | [<color:red><&trash> Delete</color>] }
+'     { "test subscription 2    " | <color:grey><&wifi> disabled</color> | . | [<&wrench> Edit] | [<color:red><&trash> Delete</color>] }
+'     --
+'     { [<&plus> new subscription] }
+' }
+
+@endsalt

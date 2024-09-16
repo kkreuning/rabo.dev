@@ -46,7 +46,7 @@ customer's credit in your systems.
         },
         "metadata": "...merchant-defined-metadata..."
     },
-"timestamp": 1725290562
+    "timestamp": 1725290562
 }
 ```
 
