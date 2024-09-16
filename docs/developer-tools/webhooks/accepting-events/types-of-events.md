@@ -4,7 +4,7 @@ sidebar_position: 10
 
 # Types of events
 
-Whenever Rabo Smart Pay delivers an event, the HTTP request to your server will include an `x-smartpay-event-type`
+Whenever Rabo Smart Pay delivers an event, the HTTP request to your server will include an `X-SmartPay-Event-Type`
 containing the, well, type of the event.
 
 Which events are delivered to which destinations is managed through
@@ -14,9 +14,9 @@ If your server receives an event that it does not know of that delivery should b
 getting the delivery [retried](./retrying-failed-deliveries.md). Next you should probably check your subscriptions, and
 remove the unexpected event from the webhook subscription.
 
-:::info covered by the SDK
+:::info Covered by the SDK
 
-When using the `smartPay.processWebhook` or equivalent method of the SDK, parsing the correct event type, and dealing
+When using the `smartPay.processWebhook` or equivalent method of the SDK parsing the correct event type, and dealing
 with unexpected types is taken care of automatically.
 
 :::
@@ -59,7 +59,7 @@ fields. Existing implementations therefor must ignore new fields that they are n
 In cases where breaking changes are inevitable Rabo Smart Pay will create a new version of the event. You can
 [upgrade event versions](./upgrading-event-versions.md) at your own pace.
 
-:::note
+:::note A note deprecation
 
 Rabo Smart Pay will not remove older versions of events as long as they are still in use. However when a version is
 deprecated, you won't be able to create subscriptions targeting that version anymore.

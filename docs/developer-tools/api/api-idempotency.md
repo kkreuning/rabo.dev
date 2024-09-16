@@ -9,24 +9,24 @@ If, for example, you create an order but are unsure of the result because of a n
 the call without the risk of creating an additional order.
 
 ## Enabling idempotency
-:::info covered by the SDK
+:::info Covered by the SDK
 
 The [Rabo Smart Pay SDK](#) supports idempotency for safe retries without any additional configuration out of the box.
 
 :::
 
-To make an idempotent request you should include the `idempotency-key:<key>` HTTP header to your POST requests.
+To make an idempotent request you should include the `Idempotency-Key:<key>` HTTP header to your POST requests.
 
 The `<key>` must be a string unique for every call, Rabo Smart Pay recommends using a UUID, but you are free to use any
 string with a maximum of 64 character.
 
-Rabo Smart Pay will process the request as usual unless it has already seen the idempotency key before, in that case it
-will return the response to the first request made with the idempotency key.
+Under normal circumstances your request will pass through normally, and Rabo Smart Pay echoes your idempotency key
+back to you in a HTTP response header.
 
-Rabo Smart Pay will echo the idempotency key back to you in the form of a HTTP response header.
-
-To verify that a request was processed idempotently, you should compare the key in the `idempotency-key` HTTP response
-header to the idempotency key that you passed.
+Now, when another request is made to Rabo Smart Pay with the same idempotency key, one of the following things happen:
+- If a previous request with the same key has been completed, you will receive the cached response.
+- If a previous request with the same key is still being processed ("in flight"), you will receive a `409 Conflict`
+HTTP status code. In that case you should retry the request later to get a definitive answer.
 
 ## Time validity
 Rabo Smart Pay will remember idempotency keys for a minimum of 48 hours. This has two implications:
@@ -34,14 +34,15 @@ Rabo Smart Pay will remember idempotency keys for a minimum of 48 hours. This ha
 2. You should not make other requests using the same idempotency key within that time frame.
 
 ## Error handling
-Not all errors are recoverable, if you tried to access a resource that does not
-exist (by receiving a `404 Not Found` HTTP status code) retrying the request
-will not fix the situation. You should only retry requests in case of timeouts,
-and HTTP status codes in the 500 range.
+Not all errors are recoverable, for example if you tried to access a resource that does not exist (and received a
+`404 Not Found` HTTP status code) retrying the request will not fix the situation.
 
-If you are too fast with your retry you may receive a `422 Unprocessable Entity`
-HTTP response code because Rabo Smart Pay is still processing your request. In
-that case you should retry the request again later.
+You should only retry requests if:
+- they are timed out.
+- the status code is `408 Request Timeout`, Rabo Smart Pay didn't receive a complete request in time.
+- the status code is `409 Conflict`, your initial request might still be in flight.
+- the status code is `429 Too Many Requests`, you might be [rate-limited](#).
+- the status code is in the `500` range
 
 ## Best practices
 - Use (random) UUIDs for your idempotency keys.

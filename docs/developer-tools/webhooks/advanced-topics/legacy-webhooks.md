@@ -4,7 +4,7 @@ sidebar_position: 100
 
 # Legacy webhooks
 
-:::warning deprecated
+:::warning Deprecated
 
 Legacy webhooks are only available for existing merchants.
 
@@ -13,7 +13,7 @@ If you are still using legacy webhooks, you won't be able to use newer Rabo Smar
 
 :::
 
-In a previous life Rabo Smart Pay used a different mechanism of informing merchants, to so called PING-PULL model.
+In a previous life Rabo Smart Pay used a different mechanism of informing merchants, the so called PING-PULL model.
 
 A merchant would provide a webhook URL through the Dashboard, Omnikassa (as Rabo Smart Pay was known back then) would
 send "pings" whenever an Order reached an end-status, and the merchant would then "pull" the events by calling a Rabo

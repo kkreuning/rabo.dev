@@ -14,7 +14,7 @@ Your server then must:
 
 ![](./img/webhook-sequence-diagram.svg)
 
-:::note use the SDK
+:::note Use the SDK
 
 You should use the [Rabo Smart Pay SDK](#) when integrating webhooks into your platform.
 

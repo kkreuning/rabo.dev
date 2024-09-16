@@ -5,7 +5,7 @@ sidebar_position: 60
 # Managing subscriptions
 
 Rabo Smart Pay delivers events to your server using one or more webhook subscriptions, a subscription consist of:
-1. A destination in the form of an HTTP endpoints controlled by the merchant.
+1. A destination in the form of an HTTP endpoints controlled by the you.
 2. A set of [event types](./accepting-events/types-of-events.md) that will be delivered to the destination.
 3. Optionally a textual description of the webhook.
 
@@ -24,7 +24,7 @@ TODO(code snippet)
 #### Disable a subscription
 TODO(code snippet)
 
-:::info outstanding deliveries on changed webhook subscriptions
+:::info Outstanding deliveries on changes
 
 Whenever you disable, or delete a webhook subscription that still has outstanding deliveries, Rabo Smart Pay will still
 attempt to deliver those events. Keep this in mind when disabling a webhook subscription; the destination might still

@@ -17,7 +17,7 @@ Rabo Smart Pay publishes its public keys at
 signature you must always use one of the published keys!
 
 ## Verifying signatures using the SDK
-:::info covered by the SDK
+:::info Covered by the SDK
 
 When using the `smartPay.processWebhook` or equivalent method of the SDK, signature validation is taken care of
 automatically.
@@ -25,7 +25,7 @@ automatically.
 :::
 
 To manually verify the signature of an event, you need to provide the "raw" bytes of the HTTP request's body, together
-with the signature from the HTTP header `x-smartpay-signature`.
+with the signature from the HTTP header `X-SmartPay-Signature`.
 
 <Tabs groupId="languague">
     <TabItem value="java" label="Java">
@@ -40,7 +40,7 @@ boolean isValid = smartPay.verifySignature(signature, body);
 if (isValid) {
   // good to go
 } else {
-  // something went wroing
+  // something went wrong
 }
       ```
   </TabItem>
@@ -63,16 +63,27 @@ if (isValid) {
 </Tabs>
 
 ## Verifying signatures without the SDK
-:::warning don't try this at home
+:::warning Don't try this at home
 
 The [Rabo Smart Pay SDK](#) provides tooling to verify signatures. You should use the SDK whenever possible.
 
 :::
 
-If you are for some reason unable to use the SDK, you must follow the steps outlined below after you received the
-delivery.
+If you are for some reason unable to use the SDK, you should at least use an existing
+[JWT library](https://jwt.io/libraries) to do the JWS creation, and signature verification. When selecting a library
+ensure that the following algorithms are supported:
+- ES256
+- ES384
+- ES512
+- RS256
+- RS384
+- RS512
 
-1. Get the value of the HTTP request header with name `x-smartpay-signature`. This will be the _detached-jws_.
+A list of JWT libraries can be found at [https://jwt.io/libraries](https://jwt.io/libraries).
+
+With a suitable library in place, your server must:
+
+1. Get the value of the HTTP request header with name `X-SmartPay-Signature`. This will be the _detached-jws_.
 2. Split the _detached-jws_ on the dot character (`.`), the first part will be the _header_, the last part will be the _signature_.
 3. Get the body of the HTTP request as an array of bytes, this will be the _payload_.
 4. Craft a _JWS_ using the _header_, _payload_, and _signature_ as input.

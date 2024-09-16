@@ -4,7 +4,7 @@ sidebar_position: 50
 
 # Outgoing IP addresses
 
-:::warning don't try this at home
+:::warning Don't try this at home
 
 Your server should solely rely on an event's cryptographic signature to determine the event's authenticity.
 
@@ -19,7 +19,7 @@ Rabo Smart Pay publishes its outgoing IP addresses in the form of DNS records.
 
 ## Resolving ougoing IP addresses
 
-Your server must perform a DSN lookup on the domain `out.pay.rabobank.nl` and write down the IP addresses in the `A`
+Your server must perform a DNS lookup on the domain `out.pay.rabobank.nl` and write down the IP addresses in the `A`
 records.
 
 ```bash

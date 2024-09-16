@@ -14,7 +14,7 @@ To acknowledge a delivery, your server must:
 
 Any other response, or the lack of a timely response, will be considered by Rabo Smart Pay as failed.
 
-:::info you are responsible for acknowledgements
+:::info You are responsible for acknowledgements
 
 If your server does not behave correctly too many times, or is misconfigured, Rabo Smart Pay may disable the offending webhook subscription on your behalf.
 
