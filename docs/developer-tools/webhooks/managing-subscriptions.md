@@ -1,6 +1,6 @@
 ---
 sidebar_position: 60
-title: managing subscriptions
+title: Managing subscriptions
 ---
 
 import Tabs from '@theme/Tabs';
@@ -87,6 +87,7 @@ Whenever you disable, or delete a webhook subscription that still has outstandin
 attempt to deliver those events. Keep this in mind when disabling a webhook subscription; the destination might still
 receive events afterwards.
 
-If you change the destination of a webhook subscription, any outstanding deliveries will be sent to the new destination.
+If you change the destination of a webhook subscription, any outstanding deliveries will still be sent to the old
+destination.
 
 :::
